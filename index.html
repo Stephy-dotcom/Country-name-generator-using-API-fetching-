@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        button:hover{
+            
+            font-weight: bold;
+        }
+        .row{
+          width: 100%;
+          height: 400px;  
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+        }
+        .col{
+            width: 200px;
+            height: 300px;
+            margin-top: 50px;
+            position: absolute;
+            bottom: 60%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="" style="margin-left: 550px;  margin-top: 50px; width: 300px; height: 200px; background-color: rgb(100, 219, 223);" class="border border-shadow" >
+            <input id="ctryname" type="text" placeholder="Enter the country name" style="margin-left: 20px; width: 250px; height: 35px; margin-top: 60px;"><br><br>
+            <button type="button" onclick="cntryname()" style="margin-left: 120px; margin-top: 40px; background-color: transparent; border: 1px solid black;">Submit</button>
+        </form>
+    </div>
+
+   <div class="row" >
+    <div id="result" class="col" style="margin-left: 100px; font-size: small;"></div>
+    <div id="emp" class="col" style="margin-left: 1000px;"></div>
+   </div>
+
+
+
+    <script>
+        function cntryname(){
+           var countryName=ctryname.value;
+           console.log(countryName);
+             
+           fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
+           .then(response=>response.json())
+           .then(countryName=>fnctncounty(countryName))
+           .catch(error=>console.log('Error Fetching name', error));
+        }
+           function fnctncounty(countryName){
+            capital=countryName[0].capital
+            flag=countryName[0].flags.svg
+            name=countryName[0].name.common
+            about=countryName[0].flags.alt
+            region=countryName[0].region
+            coatOfArms=countryName[0].coatOfArms.svg
+                let htmldata=`<div class="card" style="width: 250px; height: 410px;">
+                    <img src="${flag}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">Name: ${name}</p>
+                        <p class="card-text">About: ${about}</p>
+                        <p class="card-text">Capital: ${capital}</p>
+                        <p class="card-text">Region: ${region}</p>
+                    </div>
+                    </div>`
+           result.innerHTML=htmldata
+
+           let htmldata2=`<div>
+            <img src="${coatOfArms}" alt="" style="width: 250px; height: 410px;"> 
+                </div>`
+        
+                emp.innerHTML=htmldata2
+
+            }
+            
+    </script>
+</body>
+</html>
